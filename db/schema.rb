@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150607235217) do
+ActiveRecord::Schema.define(version: 20150608195034) do
 
   create_table "applauses", force: true do |t|
     t.integer  "paper_id"
@@ -28,6 +28,10 @@ ActiveRecord::Schema.define(version: 20150607235217) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "alive"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.integer  "goal_value"
+    t.string   "goal_type"
   end
 
   create_table "versions", force: true do |t|

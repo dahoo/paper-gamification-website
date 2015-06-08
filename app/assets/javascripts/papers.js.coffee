@@ -126,11 +126,23 @@ initTimeline = (data) ->
                                 name: 'Words'
                                 data: words
                                 yAxis: 0
+                                zoneAxis: 'x'
+                                zones: [
+                                        { value: words[words.length - 2][0] }
+                                        { dashStyle: 'dot' }
+                                ]
+                                connectNulls: true
                         }
                         {
                                 name: 'Pages'
                                 data: pages
                                 yAxis: 1
+                                zoneAxis: 'x'
+                                zones: [
+                                        { value: pages[pages.length - 2][0] }
+                                        { dashStyle: 'dot' }
+                                ]
+                                connectNulls: true
                         }
                 ]
 
