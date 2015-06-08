@@ -19,17 +19,21 @@ totalWordsIdentifier = "num_words";
 distinctLevels = [50, 100, 200, 300, 500, 800, 1000, 1250, 1500];
 distinctIdentifier = "different_words";
 
-@updateSketches = (id) ->
-	$.ajax id.toString(),
-		type: 'GET'
-		dataType: 'json'
-		error: (jqXHR, textStatus, errorThrown) ->
-			console.log "WARNING: Couldn't get current stats"
-		success: (data, textStatus, jqXHR) ->
-			console.log "SUCCESS: Got current stats, updating sketches..."
+paper_etag = undefined
 
-			for sketch of sketches
-				updateSketch(sketch, data)
+@updateSketches = (id) ->
+        $.ajax "#{id.toString()}.json",
+                type: 'GET'
+                dataType: 'json'
+                error: (jqXHR, textStatus, errorThrown) ->
+                        console.log "WARNING: Couldn't get current stats"
+                success: (data, textStatus, jqXHR) ->
+                        if paper_etag != jqXHR.getResponseHeader("Etag")
+                                console.log "SUCCESS: Got current stats, updating sketches..."
+                                for sketch of sketches
+                                        updateSketch(sketch, data)
+
+                                paper_etag = jqXHR.getResponseHeader("Etag")
 
 
 @updateSketch = (sketch, data) ->
