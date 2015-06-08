@@ -6,7 +6,7 @@
 <%= render "applause" %>
 
 <p id="backbutton"><%= link_to 'BACK TO ALL PAPERS', papers_path %></p>
-<% if @paper.alive %>	
+<% if @paper.alive %>
 	<p id="typing">I'm currently typing ... !</p>
 <% end %>
 <div class="container">
@@ -30,6 +30,10 @@
 				<h3>Paragraphs</h3>
 				<canvas id="paragraphs" data-processing-sources=<%=asset_path 'paragraphs.pde'%> ></canvas>
 			</div>
+		</div>
+		<div class="span12 text-center">
+			<h3>History</h3>
+			<div id="timeline"/>
 		</div>
 		<div class="row">
 			<div class="span4 text-center">
