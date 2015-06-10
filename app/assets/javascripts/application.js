@@ -13,4 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require highcharts
+//= require highcharts/highcharts-more
+//= require highcharts/themes/dark-unica
 //= require_tree .

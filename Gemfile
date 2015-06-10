@@ -28,6 +28,11 @@ gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
+# Versioning
+gem 'paper_trail', '~> 4.0.0.rc'
+
+gem "highcharts-rails", "~> 4.1.5"
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

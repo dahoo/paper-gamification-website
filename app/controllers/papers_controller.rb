@@ -11,6 +11,7 @@ class PapersController < ApplicationController
   # GET /papers/1
   # GET /papers/1.json
   def show
+    fresh_when last_modified: @paper.updated_at.utc, etag: @paper
   end
 
   # GET /papers/new
