@@ -4,7 +4,8 @@ class Paper < ActiveRecord::Base
   has_paper_trail skip: [:created_at, :updated_at]
 
   def history
-    versions.map do |version|
+    return [] unless stats
+    versions.reject {|v| v.reify.nil? || v.reify.stats.nil? }.map do |version|
       {
         time: version.created_at,
         words: JSON.parse(version.reify.stats)['num_words'],
