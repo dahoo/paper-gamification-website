@@ -6,7 +6,7 @@ class Paper < ActiveRecord::Base
   def history
     return [] unless stats
     history = [start]
-    history += versions.reject {|v| v.reify.stats.nil? }.map do |version|
+    history += versions.reject {|v| v.reify.nil? || v.reify.stats.nil? }.map do |version|
       {
         time: version.created_at,
         words: JSON.parse(version.reify.stats)['num_words'],
