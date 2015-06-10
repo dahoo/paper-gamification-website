@@ -119,7 +119,7 @@ initTimeline = (data) ->
                 ]
                 tooltip:
                         headerFormat: '<b>{series.name}</b><br>'
-                        pointFormat: '{point.x:%e. %b}: {point.y:.2f}'
+                        pointFormat: '{point.x:%e. %b}: {point.y}'
                 plotOptions: spline: marker: enabled: true
                 series: [
                         {
