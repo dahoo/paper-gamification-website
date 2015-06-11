@@ -1,4 +1,4 @@
-json.extract! @paper, :title, :created_at, :updated_at, :history
+json.extract! @paper, :title, :created_at, :updated_at, :history, :achieved
 if @paper.stats.nil?
   json.stats []
 else

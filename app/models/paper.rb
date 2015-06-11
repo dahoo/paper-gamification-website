@@ -6,7 +6,7 @@ class Paper < ActiveRecord::Base
   def history
     return [] unless stats
     history = [start]
-    history += versions.reject {|v| v.reify.nil? || v.reify.stats.nil? }.map do |version|
+    history += versions.reject { |v| v.reify.nil? || v.reify.stats.nil? }.map do |version|
       {
         time: version.created_at,
         words: JSON.parse(version.reify.stats)['num_words'],
@@ -43,5 +43,36 @@ class Paper < ActiveRecord::Base
       goal[goal_type.to_sym] = goal_value
     end
     goal
+  end
+
+  def get_non_nil_values_with_date(key)
+    dates = versions.reject do|v|
+      v.reify.nil? ||
+      v.reify.stats.nil? ||
+      JSON.parse(v.reify.stats)[key].nil?
+    end.each_with_object({}) do |v, o|
+      o[v.created_at.to_f] = stats_as_json(v.reify.stats)[key].to_f
+    end
+  end
+
+  def achieved
+    %w(num_words pages).each_with_object({}) do |key, o|
+      values = get_non_nil_values_with_date key
+      spline = Spliner::Spliner.new values
+      result = {
+        hour: nil,
+        day: nil,
+        week: nil
+      }
+      result[:hour] = stats_as_json[key] - spline[1.hour.ago.to_f] if spline[1.hour.ago.to_f]
+      result[:day] = stats_as_json[key] - spline[1.day.ago.to_f] if spline[1.day.ago.to_f]
+      result[:week] = stats_as_json[key] - spline[1.week.ago.to_f] if spline[1.week.ago.to_f]
+      o[key] = result
+    end
+  end
+
+  def stats_as_json(the_stats = nil)
+    the_stats ||= stats
+    JSON.parse the_stats
   end
 end

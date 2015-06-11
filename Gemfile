@@ -32,6 +32,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'paper_trail', '~> 4.0.0.rc'
 
 gem "highcharts-rails", "~> 4.1.5"
+gem 'spliner'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
