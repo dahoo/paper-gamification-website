@@ -148,7 +148,7 @@ initTimeline = (data) ->
                 ]
 
 round = (float, precison) ->
-        Math.round(float * precison) / precison
+        Math.round(float * 10 * precison) / (10 * precison)
 
 updateAchievements = (data) ->
         for key in ['num_words', 'pages']
