@@ -73,6 +73,6 @@ class Paper < ActiveRecord::Base
 
   def stats_as_json(the_stats = nil)
     the_stats ||= stats
-    JSON.parse the_stats
+    JSON.parse the_stats if the_stats
   end
 end

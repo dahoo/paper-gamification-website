@@ -31,9 +31,46 @@
 				<canvas id="paragraphs" data-processing-sources=<%=asset_path 'paragraphs.pde'%> ></canvas>
 			</div>
 		</div>
-		<div class="span12 text-center">
-			<h3>History</h3>
-			<div id="timeline"/>
+		<div class="row">
+			<div class="span4 text-center">
+			  <h3>Last hour</h3>
+			  <div id="hour">
+			    <div>
+			      <span class="num_words"></span> words
+			    </div>
+			    <div>
+			      <span class="pages"></span> pages
+			    </div>
+			  </div>
+			</div>
+			<div class="span4 text-center">
+			  <h3>Today</h3>
+			  <div id="today">
+			    <div>
+			      <span class="num_words"></span> words
+			    </div>
+			    <div>
+			      <span class="pages"></span> pages
+			    </div>
+			  </div>
+			</div>
+			<div class="span4 text-center">
+			  <h3>This week</h3>
+			  <div id="this-week">
+			    <div>
+			      <span class="num_words"></span> words
+			    </div>
+			    <div>
+			      <span class="pages"></span> pages
+			    </div>
+			  </div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="span12 text-center">
+				<h3>History</h3>
+				<div id="timeline"/>
+			</div>
 		</div>
 		<div class="row">
 			<div class="span4 text-center">

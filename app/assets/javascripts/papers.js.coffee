@@ -37,6 +37,7 @@ paper_etag = undefined
                                         updateTimeline(data["history"])
                                 else
                                         initTimeline(data["history"])
+                                updateAchievements(data["achieved"])
                                 paper_etag = jqXHR.getResponseHeader("Etag")
 
 
@@ -145,6 +146,12 @@ initTimeline = (data) ->
                                 connectNulls: true
                         }
                 ]
+
+updateAchievements = (data) ->
+        for key in ['num_words', 'pages']
+                $("#hour span.#{key}").text(data[key]['hour'])
+                $("#today span.#{key}").text(data[key]['today'])
+                $("#this-week span.#{key}").text(data[key]['this_week'])
 
 $ ->
         if $('.visualization').length > 0 # See if we're on a paper_show page
