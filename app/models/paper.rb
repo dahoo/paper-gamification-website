@@ -63,7 +63,9 @@ class Paper < ActiveRecord::Base
       result = {
         hour: stats_as_json[key] - inter.at(1.hour.ago.to_f),
         day: stats_as_json[key] - inter.at(1.day.ago.to_f),
-        week: stats_as_json[key] - inter.at(1.week.ago.to_f)
+        week: stats_as_json[key] - inter.at(1.week.ago.to_f),
+        today: stats_as_json[key] - inter.at(Date.today.beginning_of_day.to_time.to_f),
+        this_week: stats_as_json[key] - inter.at(Date.today.beginning_of_week.to_time.to_f)
       }
       o[key] = result
     end
