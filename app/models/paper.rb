@@ -46,27 +46,25 @@ class Paper < ActiveRecord::Base
   end
 
   def get_non_nil_values_with_date(key)
-    dates = versions.reject do|v|
+    versions.reject do|v|
       v.reify.nil? ||
       v.reify.stats.nil? ||
       JSON.parse(v.reify.stats)[key].nil?
     end.each_with_object({}) do |v, o|
       o[v.created_at.to_f] = stats_as_json(v.reify.stats)[key].to_f
+    end.tap do |h|
+      h[updated_at.to_f] = stats_as_json[key]
     end
   end
 
   def achieved
     %w(num_words pages).each_with_object({}) do |key, o|
-      values = get_non_nil_values_with_date key
-      spline = Spliner::Spliner.new values
+      inter = Interpolate::Points.new get_non_nil_values_with_date(key)
       result = {
-        hour: nil,
-        day: nil,
-        week: nil
+        hour: stats_as_json[key] - inter.at(1.hour.ago.to_f),
+        day: stats_as_json[key] - inter.at(1.day.ago.to_f),
+        week: stats_as_json[key] - inter.at(1.weeek.ago.to_f)
       }
-      result[:hour] = stats_as_json[key] - spline[1.hour.ago.to_f] if spline[1.hour.ago.to_f]
-      result[:day] = stats_as_json[key] - spline[1.day.ago.to_f] if spline[1.day.ago.to_f]
-      result[:week] = stats_as_json[key] - spline[1.week.ago.to_f] if spline[1.week.ago.to_f]
       o[key] = result
     end
   end
