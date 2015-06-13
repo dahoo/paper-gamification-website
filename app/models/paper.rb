@@ -5,7 +5,8 @@ class Paper < ActiveRecord::Base
 
   def history
     return [] unless stats
-    history = [start]
+    history = []
+    history.append start if start_date
     history += versions.reject { |v| v.reify.nil? || v.reify.stats.nil? }.map do |version|
       {
         time: version.created_at,
@@ -14,7 +15,7 @@ class Paper < ActiveRecord::Base
       }
     end
     history.append current
-    history.append goal
+    history.append goal if end_date
   end
 
   def start
