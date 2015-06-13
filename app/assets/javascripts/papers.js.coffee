@@ -131,7 +131,7 @@ time_line_data = undefined
                 tooltip:
                         headerFormat: '<b>{series.name}</b><br>'
                         pointFormat: '{point.x:%e. %b}: {point.y}'
-                plotOptions: spline: marker: enabled: true
+                plotOptions: spline: marker: enabled: false
                 series: [
                         {
                                 name: 'Words'
