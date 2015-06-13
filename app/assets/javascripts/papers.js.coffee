@@ -20,6 +20,7 @@ distinctLevels = [50, 100, 200, 300, 500, 800, 1000, 1250, 1500];
 distinctIdentifier = "different_words";
 
 paper_etag = undefined
+chart = undefined
 
 @updateSketches = (id) ->
         $.ajax "#{id.toString()}.json",
@@ -33,7 +34,7 @@ paper_etag = undefined
                                 for sketch of sketches
                                         updateSketch(sketch, data)
 
-                                if @chart
+                                if chart
                                         updateTimeline(data["history"])
                                 else
                                         initTimeline(data["history"])
@@ -75,7 +76,13 @@ paper_etag = undefined
 
         sketches[sketch] = 1
 
-updateTimeline = (data) ->
+time_line_data = undefined
+
+@updateTimeline = (data) ->
+        if time_line_data and data.length == time_line_data.length
+                return
+        time_line_data = data
+
         words = []
         pages = []
 
@@ -83,12 +90,15 @@ updateTimeline = (data) ->
                 words.push([Date.parse(value.time), value.words])
                 pages.push([Date.parse(value.time), value.pages])
 
-        @chart.series[0].update
+        chart.series[0].update
                 data: words
-        @chart.series[1].update
+                redraw: false
+        chart.series[1].update
                 data: pages
+                redraw: false
+        chart.redraw()
 
-initTimeline = (data) ->
+@initTimeline = (data) ->
         words = []
         pages = []
 
@@ -96,7 +106,7 @@ initTimeline = (data) ->
                 words.push([Date.parse(value.time), value.words])
                 pages.push([Date.parse(value.time), value.pages])
 
-        @chart = $('#timeline').highcharts
+        $('#timeline').highcharts
                 chart:
                         type: 'spline'
                         zoomType: 'x'
@@ -146,6 +156,7 @@ initTimeline = (data) ->
                                 connectNulls: true
                         }
                 ]
+        chart = $('#timeline').highcharts()
 
 round = (float, precison) ->
         Math.round(float * 10 * precison) / (10 * precison)
