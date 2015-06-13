@@ -152,9 +152,8 @@ round = (float, precison) ->
 
 updateAchievements = (data) ->
         for key in ['num_words', 'pages']
-                $("#hour span.#{key}").text(round(data[key]['hour'], 2))
-                $("#today span.#{key}").text(round(data[key]['today'], 2))
-                $("#this-week span.#{key}").text(round(data[key]['this_week'], 2))
+                for id in ['hour', 'today', 'yesterday', 'this_week']
+                        $("##{id} span.#{key}").text(round(data[key][id], 2))
 
 $ ->
         if $('.visualization').length > 0 # See if we're on a paper_show page
