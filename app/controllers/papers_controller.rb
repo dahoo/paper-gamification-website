@@ -11,7 +11,7 @@ class PapersController < ApplicationController
   # GET /papers/1
   # GET /papers/1.json
   def show
-    fresh_when last_modified: @paper.updated_at.utc, etag: @paper
+    headers['ETag'] = Digest::MD5.hexdigest(@paper.cache_key)
   end
 
   # GET /papers/new

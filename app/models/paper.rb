@@ -48,8 +48,8 @@ class Paper < ActiveRecord::Base
   def get_non_nil_values_with_date(key)
     versions.reject do|v|
       v.reify.nil? ||
-      v.reify.stats.nil? ||
-      JSON.parse(v.reify.stats)[key].nil?
+        v.reify.stats.nil? ||
+        JSON.parse(v.reify.stats)[key].nil?
     end.each_with_object({}) do |v, o|
       o[v.created_at.to_f] = stats_as_json(v.reify.stats)[key].to_f
     end.tap do |h|
@@ -64,15 +64,21 @@ class Paper < ActiveRecord::Base
         hour: stats_as_json[key] - inter.at(1.hour.ago.to_f),
         day: stats_as_json[key] - inter.at(1.day.ago.to_f),
         week: stats_as_json[key] - inter.at(1.week.ago.to_f),
+        yesterday: inter.at(Date.today.beginning_of_day.to_time.to_f) -
+                   inter.at(Date.yesterday.beginning_of_day.to_time.to_f),
         today: stats_as_json[key] - inter.at(Date.today.beginning_of_day.to_time.to_f),
         this_week: stats_as_json[key] - inter.at(Date.today.beginning_of_week.to_time.to_f)
       }
-      o[key] = result
+      o[key] = result.inject({}) { |h, (k, v)| h[k] = v.round(2); h }
     end
   end
 
   def stats_as_json(the_stats = nil)
     the_stats ||= stats
     JSON.parse the_stats if the_stats
+  end
+
+  def cache_key
+    [stats, achieved, history].map(&:to_s).join
   end
 end
