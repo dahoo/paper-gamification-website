@@ -77,8 +77,4 @@ class Paper < ActiveRecord::Base
     the_stats ||= stats
     JSON.parse the_stats if the_stats
   end
-
-  def cache_key
-    [stats, achieved, history].map(&:to_s).join
-  end
 end

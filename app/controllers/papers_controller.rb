@@ -11,7 +11,6 @@ class PapersController < ApplicationController
   # GET /papers/1
   # GET /papers/1.json
   def show
-    headers['ETag'] = Digest::MD5.hexdigest(@paper.cache_key)
   end
 
   # GET /papers/new

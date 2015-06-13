@@ -11,7 +11,7 @@ sketches = {
 	"word-cloud": 0
 }
 
-update_interval = 5000;
+update_interval = 20000;
 
 totalWordsLevels = [100, 1000, 2000, 3000, 4000, 5000, 10000, 15000, 20000 ];
 totalWordsIdentifier = "num_words";
