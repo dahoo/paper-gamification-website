@@ -163,7 +163,7 @@ round = (float, precison) ->
 
 updateAchievements = (data) ->
         for key in ['num_words', 'pages']
-                for id in ['hour', 'today', 'yesterday', 'this_week']
+                for id in ['hour', 'today', 'yesterday', 'this_week', 'week']
                         $("##{id} span.#{key}").text(round(data[key][id], 2))
 
 $ ->
